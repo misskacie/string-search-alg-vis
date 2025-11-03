@@ -1,11 +1,13 @@
 
 td {
   /* border-collapse: collapse; */
-  /* border: 1px solid; */
-  padding: 15px;
+  /* border: 1px solid black; */
   text-align: center;
+  width:fit-content;
+  padding: auto;
 }
 
 table {
     table-layout: fixed;
+    overflow-x: auto; 
 }
