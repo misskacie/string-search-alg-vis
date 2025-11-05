@@ -12,16 +12,20 @@
         <br>
 		<button class="btn" onclick="get_kmp_strings()">Visualise KMP</button>
         <button class="btn" onclick="get_bmh_strings()">Visualise BMH</button>
+        <button class="btn" onclick="get_suffix_array_strings()">Visualise Suffix Array</button>
+        <br>
+        <button id="prev-step-btn" class="btn" onclick="prev_vis_step()" disabled="true">Prev Step</button>
+        <button id="next-step-btn" class="btn" onclick="next_vis_step()">Next Step</button>
 	</div>
+    <ol id="infolist"></ol>
     <table id ="KMPFAILURE"></table>
     <br>
     <table id ="KMPTABLE"></table>
     <ul id="KMP-Steps"></ul> <br>
-    <button id="prev-step-btn" class="btn" onclick="prev_vis_step()" disabled="true">Prev Step</button>
-    <button id="next-step-btn" class="btn" onclick="next_vis_step()">Next Step</button>
-
-
+    
     
 </body>
-<script src="scripts.js" type="text/javascript"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+<script src="scripts.js" type="module"></script>
+
 </html> 
