@@ -134,8 +134,8 @@ function get_suffix_array_strings() {
 
 
     const suffix_steps = [
-        "Create array \\(T_{i}\\) of pointers to suffixes in text ", 
-        "Sort array of suffix pointers lexagraphically to get \\(T_{S[i]}\\)", 
+        "Create array of pointers i to suffixes in text \\(T_{i}\\)  ", 
+        "Sort array of suffix pointers lexagraphically to get \\(S[i]\\)", 
         "Binary search the sorted suffix array, looking for the pattern, comparing at worst \\(m\\) characters each time, before determining a string is not a prefix",
         "If all \\(m\\) characters match, the pattern occurs at location \\(S[i]\\)"
     ];
