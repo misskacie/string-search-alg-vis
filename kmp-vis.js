@@ -5,7 +5,7 @@ let DARR = "\u2193" // ↓
 let UARR = "\u2191" // ↑
 var i, td, td1, td2;
 
-function update_failure_func(failure_func){
+function update_failure_func(failure_func, search_pattern){
     let table = document.createElement('table');
     let row1 =  table.insertRow()
     let row2 = table.insertRow()
@@ -34,7 +34,7 @@ function update_kmp_vis(steps, found, vis_step, search_pattern, search_text) {
     if (pad_ed){
         pad_ed.remove();
     }
-    
+
     let table = document.createElement('table');
     let kmp_s = steps[vis_step][0];
     let kmp_i = steps[vis_step][1];

@@ -3,7 +3,7 @@ const CELL_PAD = "5pt";
 let DARR = "\u2193" // ↓
 let UARR = "\u2191" // ↑
 var i, td, td1, td2;
-function add_bmh_shift_array_html(bad_shift_array){
+function add_bmh_shift_array_html(bad_shift_array, search_pattern){
     let table = document.createElement('table');
     let row1 =  table.insertRow()
     let row2 = table.insertRow()
@@ -58,7 +58,7 @@ function update_bmh_vis(steps, found, vis_step, search_pattern, search_text) {
 
     let row =  table.insertRow()
     
-    for (i = 0; i <search_text.length; i++) {
+    for (i = 0; i < search_text.length; i++) {
         td = row.insertCell();
         td.style.padding = CELL_PAD;
         td.style.width = String(100/search_text.length) + "%";

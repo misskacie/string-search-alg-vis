@@ -91,7 +91,7 @@ function get_kmp_strings() {
     document.getElementById("infolist").replaceWith(infolist);
 
     update_kmp_vis(steps, found, vis_step, search_pattern, search_text);
-    update_failure_func(failure_func);
+    update_failure_func(failure_func, search_pattern);
 }
 
 function get_bmh_strings() {
@@ -116,7 +116,7 @@ function get_bmh_strings() {
     document.getElementById("infolist").replaceWith(infolist);
 
     update_bmh_vis(steps, found, vis_step, search_pattern, search_text);
-    add_bmh_shift_array_html(bad_shift_array);
+    add_bmh_shift_array_html(bad_shift_array, search_pattern);
 }
 
 function get_suffix_array_strings() {
