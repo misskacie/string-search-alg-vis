@@ -29,6 +29,12 @@ function update_failure_func(failure_func){
 }
 
 function update_kmp_vis(steps, found, vis_step, search_pattern, search_text) {
+    // Add padding so Ed sizes the box correctly
+    let pad_ed = document.getElementById("pad-ed");
+    if (pad_ed){
+        pad_ed.remove();
+    }
+    
     let table = document.createElement('table');
     let kmp_s = steps[vis_step][0];
     let kmp_i = steps[vis_step][1];

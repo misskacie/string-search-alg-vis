@@ -3,6 +3,12 @@ var i;
 const CELL_PAD = "5pt";
 const LARR = "\u2190" //←
 function update_suffix_array(unsorted_suffix_array, sorted_suffix_array, search_text, search_pattern, min, mid, max){
+    // Add padding so Ed sizes the box correctly
+    let pad_ed = document.getElementById("pad-ed");
+    if (pad_ed){
+        pad_ed.remove();
+    }
+    
     let table = document.createElement('table');
     let row =  table.insertRow()
     let td = row.insertCell();
@@ -73,7 +79,7 @@ function update_suffix_array(unsorted_suffix_array, sorted_suffix_array, search_
             td.style.textAlign = "left";
             td.appendChild(document.createTextNode("min"));
         }
-        
+
         if (i == max) {
             td = row.insertCell();
             td.style.textAlign = "left";

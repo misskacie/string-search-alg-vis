@@ -33,6 +33,11 @@ function add_bmh_shift_array_html(bad_shift_array){
 
 
 function update_bmh_vis(steps, found, vis_step, search_pattern, search_text) {
+    // Add padding so Ed sizes the box correctly
+    let pad_ed = document.getElementById("pad-ed");
+    if (pad_ed){
+        pad_ed.remove();
+    }
     let table = document.createElement('table');
     let bmh_s = steps[vis_step][0];
     let bmh_i = steps[vis_step][1];

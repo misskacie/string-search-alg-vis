@@ -6,7 +6,6 @@ function build_suffix_array(text) {
         unsorted_suffix_array.push(text.slice(-i));
     }
     unsorted_suffix_array.push('');
-    // unsorted_suffix_array.reverse();
     var sorted_suffix_array = unsorted_suffix_array.toSorted();
     return [unsorted_suffix_array, sorted_suffix_array];
 }
