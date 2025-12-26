@@ -7,43 +7,40 @@
 </head>
 <body>
 	<div class="btn-container">
-        Enter Search Pattern: <input type="text" id="search_pattern" value="abcabc">
-        Enter Search Text   : <input type="text" id="search_text" value="dabcsabcadhsfjasfabeabcabcdefg">
+        Search Pattern: <input type="text" id="search_pattern" value="abcabc">
+        Search Text   : <input type="text" id="search_text" value="dabcsabcadhsfjasfabeabcabcdefg">
         <br>
 		<button id="select-kmp-btn" class="btn">Visualise KMP</button>
         <button id="select-bmh-btn" class="btn">Visualise BMH</button>
         <button id="select-suf-arr-btn" class="btn">Visualise Suffix Array</button>
-        <br>
-        <button id="next-step-btn" class="btn green-btn" disabled>Next Step</button>
         <button id="prev-step-btn" class="btn green-btn" disabled>Prev Step</button>
+        <button id="next-step-btn" class="btn green-btn" disabled>Next Step</button>
         <button id="play-btn" class="btn" disabled>Play</button>
         <button id="pause-btn" class="btn" disabled>Pause</button>
         <button id="reset-btn" class="btn" disabled>Reset</button>
         <br>
-        <!-- <label style="margin-left:10px;">
-            Speed
-            <select id="vis-speed-select" disabled>
-                <option value="1200">Slow</option>
-                <option value="700" selected>Normal</option>
-                <option value="300">Fast</option>
-            </select>
-        </label> -->
-
-        <label for="vis-speed-slider">Speed: </label>
-        <input type="range" id="vis-speed-slider" min="0" max="1000" value="500" step="50" disabled>
-
         <label for="vis-step-slider">Time-Step: </label>
         <input type="range" id="vis-step-slider" min="0" max="100" value="0" step="1" disabled>
+        <label for="vis-speed-slider">Speed: </label>
+        <input type="range" id="vis-speed-slider" min="0" max="1000" value="500" step="50" disabled>
+        <label for="vis-padding-slider">Padding: </label>
+        <input type="range" id="vis-padding-slider" min="0" max="20" value="10" step="1" disabled>
 	</div>
-    <div class="vis-container">
-        <ol id="infolist"></ol>
+    <div id="kmp-vis-div" class="vis-container" hidden>
         <table id ="KMPFAILURE"></table>
         <br>
         <table id ="KMPTABLE"></table>
-        <ul id="KMP-Steps"></ul> <br>
-        <div id="pad-ed">
-        </div>
     </div>
+    <div id="bmh-vis-div" class="vis-container" hidden>
+        <table id ="BMHFAILURE"></table>
+        <br>
+        <table id ="BMHTABLE"></table>
+    </div>
+    <div id="suffix-array-vis-div" class="vis-container" hidden>
+        <ol id="sufarrinfolist"></ol>
+        <table id ="SUFARRTABLE"></table>
+    </div>
+    <div id="pad-ed"></div>
 </body>
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.27/dist/katex.min.css" integrity="sha384-Pu5+C18nP5dwykLJOhd2U4Xen7rjScHN/qusop27hdd2drI+lL5KvX7YntvT8yew" crossorigin="anonymous">

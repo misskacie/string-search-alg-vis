@@ -1,6 +1,8 @@
 export {update_suffix_array};
 var i;
 const LARR = "\u2190" //←
+const suf_arr_table_id = "SUFARRTABLE";
+let NBSP = "\u00A0" // non breaking space, so that spaces are preserved in copied string
 function update_suffix_array(unsorted_suffix_array, sorted_suffix_array, search_text, search_pattern, min, mid, max){
     // Add padding so Ed sizes the box correctly
     let pad_ed = document.getElementById("pad-ed");
@@ -16,6 +18,9 @@ function update_suffix_array(unsorted_suffix_array, sorted_suffix_array, search_
         throwOnError: false
     });
 
+    td = row.insertCell();
+    td.appendChild(document.createTextNode(NBSP));
+
     // td.appendChild(tnode);
     td = row.insertCell();
     katex.render("T_{i}", td, {
@@ -24,9 +29,15 @@ function update_suffix_array(unsorted_suffix_array, sorted_suffix_array, search_
     td.style.textAlign = "left";
 
     td = row.insertCell();
+    td.appendChild(document.createTextNode(NBSP+NBSP));
+
+    td = row.insertCell();
     katex.render("S[i]", td, {
         throwOnError: false
     });
+
+    td = row.insertCell();
+    td.appendChild(document.createTextNode(NBSP));
 
     td = row.insertCell();
     katex.render("T_{S[i]}", td, {
@@ -41,15 +52,18 @@ function update_suffix_array(unsorted_suffix_array, sorted_suffix_array, search_
         td.appendChild(document.createTextNode(i));
 
         td = row.insertCell();
+        td = row.insertCell();
         // Inefficient solution to get the suffix index from the array of strings.
         // as if it was a pointer.
         td.appendChild(document.createTextNode(unsorted_suffix_array[i]));
 
         td = row.insertCell();
+        td = row.insertCell();
         // Inefficient solution to get the suffix index from the array of strings.
         // as if it was a pointer.
         td.appendChild(document.createTextNode(search_text.length - sorted_suffix_array[i].length));
 
+        td = row.insertCell();
         td = row.insertCell();
         td.appendChild(document.createTextNode(sorted_suffix_array[i]));
 
@@ -85,6 +99,6 @@ function update_suffix_array(unsorted_suffix_array, sorted_suffix_array, search_
         }
 
     }
-    table.id = "KMPFAILURE";
-    document.getElementById("KMPFAILURE").replaceWith(table);
+    table.id = suf_arr_table_id;
+    document.getElementById(suf_arr_table_id).replaceWith(table);
 }

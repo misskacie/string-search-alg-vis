@@ -1,7 +1,11 @@
 export{update_bmh_vis, add_bmh_shift_array_html};
 let DARR = "\u2193" // ↓
 let UARR = "\u2191" // ↑
+let NBSP = "\u00A0" // non breaking space, so that spaces are preserved in copied string
 var i, td, td1, td2;
+const vis_table_id = "BMHTABLE";
+const shift_table_id = "BMHFAILURE";
+
 function add_bmh_shift_array_html(bad_shift_array, search_pattern){
     let table = document.createElement('table');
     let row1 =  table.insertRow()
@@ -23,8 +27,8 @@ function add_bmh_shift_array_html(bad_shift_array, search_pattern){
     td1.appendChild(document.createTextNode('rest'));
     td2.appendChild(document.createTextNode(search_pattern.length));
 
-    table.id = "KMPFAILURE";
-    document.getElementById("KMPFAILURE").replaceWith(table);
+    table.id = shift_table_id;
+    document.getElementById(shift_table_id).replaceWith(table);
 }
 
 
@@ -39,12 +43,12 @@ function update_bmh_vis(steps, found, vis_step, search_pattern, search_text) {
     let bmh_i = steps[vis_step][1];
     let row1 = table.insertRow();
     let row2 = table.insertRow();
-    for (i = 0; i < search_text.length; i++) {
+    for (i = 0; i <= bmh_s; i++) {
         td1 = row1.insertCell();
         td2 = row2.insertCell();
         td1.className = "zw-td";
         td2.className = "zw-td";
-        let text1 = "", text2 = "";
+        let text1 = NBSP, text2 = NBSP;
         if (bmh_s == i) {
             text1 = "s="+String(bmh_s);
             text2 = DARR;
@@ -74,7 +78,8 @@ function update_bmh_vis(steps, found, vis_step, search_pattern, search_text) {
     // Add padding for the offset alignment of pattern to text
      for (i = 0; i < steps[vis_step][0]; i++) {
         td = row.insertCell();
-        td.appendChild(document.createTextNode(""));
+        td.appendChild(document.createTextNode(NBSP));
+        td.className = "zw-td";
     }
 
 
@@ -97,12 +102,12 @@ function update_bmh_vis(steps, found, vis_step, search_pattern, search_text) {
 
     row1 = table.insertRow();
     row2 = table.insertRow();
-    for (i = 0; i < search_text.length; i++) {
+    for (i = 0; i <= bmh_s + bmh_i; i++) {
         td1 = row1.insertCell();
         td2 = row2.insertCell();
         td1.className = "zw-td";
         td2.className = "zw-td";
-        let text1 = "", text2 = "";
+        let text1 = NBSP, text2 = NBSP;
         if (bmh_s + bmh_i == i) {
             text1 = UARR;
             text2 = "i="+String(bmh_i);
@@ -111,8 +116,8 @@ function update_bmh_vis(steps, found, vis_step, search_pattern, search_text) {
         td2.appendChild(document.createTextNode(text2));
     }
 
-    let bmh_box = document.getElementById("KMPTABLE");
-    table.id = "KMPTABLE";
+    let bmh_box = document.getElementById(vis_table_id);
+    table.id = vis_table_id;
     bmh_box.replaceWith(table);
 }
 

@@ -2,7 +2,11 @@ export {update_kmp_vis, update_failure_func};
 
 let DARR = "\u2193" // ↓
 let UARR = "\u2191" // ↑
+let NBSP = "\u00A0" // non breaking space, so that spaces are preserved in copied string
 var i, td, td1, td2;
+
+const vis_table_id = "KMPTABLE";
+const failure_table_id = "KMPFAILURE";
 
 function update_failure_func(failure_func, search_pattern){
     let table = document.createElement('table');
@@ -21,8 +25,8 @@ function update_failure_func(failure_func, search_pattern){
         td2.appendChild(document.createTextNode(failure_func[i]));
 
     }
-    table.id = "KMPFAILURE";
-    document.getElementById("KMPFAILURE").replaceWith(table);
+    table.id = failure_table_id;
+    document.getElementById(failure_table_id).replaceWith(table);
 }
 
 function update_kmp_vis(steps, found, vis_step, search_pattern, search_text) {
@@ -38,12 +42,12 @@ function update_kmp_vis(steps, found, vis_step, search_pattern, search_text) {
 
     let row1 = table.insertRow();
     let row2 = table.insertRow();
-    for (i = 0; i < search_text.length; i++) {
+    for (i = 0; i <= kmp_s; i++) {
         td1 = row1.insertCell();
         td2 = row2.insertCell();
         td1.className = "zw-td";
         td2.className = "zw-td";
-        let text1 = "", text2 = "";
+        let text1 = NBSP, text2 = NBSP;
         if (kmp_s == i) {
             text1 = "s="+String(kmp_s);
             text2 = DARR;
@@ -75,7 +79,8 @@ function update_kmp_vis(steps, found, vis_step, search_pattern, search_text) {
     // Add padding for the offset alignment of pattern to text
      for (i = 0; i < steps[vis_step][0]; i++) {
         td = row.insertCell();
-        td.appendChild(document.createTextNode(""));
+        td.appendChild(document.createTextNode(NBSP));
+        td.className = "zw-td";
     }
 
 
@@ -97,14 +102,14 @@ function update_kmp_vis(steps, found, vis_step, search_pattern, search_text) {
 
     row1 = table.insertRow();
     row2 = table.insertRow();
-    for (i = 0; i < search_text.length; i++) {
+    for (i = 0; i <= kmp_s + kmp_i; i++) {
         td1 = row1.insertCell();
         td2 = row2.insertCell();
 
         td1.className = "zw-td";
         td2.className = "zw-td";
 
-        let text1 = "", text2 = "";
+        let text1 = NBSP, text2 = NBSP;
         if (kmp_s + kmp_i == i) {
             text1 = UARR;
             text2 = "i="+String(kmp_i);
@@ -114,7 +119,7 @@ function update_kmp_vis(steps, found, vis_step, search_pattern, search_text) {
 
     }
 
-    let kmp_box = document.getElementById("KMPTABLE");
-    table.id = "KMPTABLE";
+    let kmp_box = document.getElementById(vis_table_id);
+    table.id = vis_table_id;
     kmp_box.replaceWith(table);
 }
