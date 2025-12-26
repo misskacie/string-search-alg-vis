@@ -14,25 +14,18 @@ var search_text;
 var unsorted_suffix_array, sorted_suffix_array;
 var mode = "";
 
+const select_suf_arr_btn = document.getElementById("select-suf-arr-btn");
+const select_bmh_btn = document.getElementById("select-bmh-btn");
+const select_kmp_btn = document.getElementById("select-kmp-btn");
 const next_step_btn = document.getElementById("next-step-btn");
 const prev_step_btn = document.getElementById("prev-step-btn");
 const vis_step_slider = document.getElementById("vis-step-slider");
-const vis_speed_select = document.getElementById("vis-speed-select")
+const vis_speed_slider = document.getElementById("vis-speed-slider")
 const play_btn = document.getElementById("play-btn");
 const pause_btn = document.getElementById("pause-btn");
 const reset_btn = document.getElementById("reset-btn");
 const search_pattern_field = document.getElementById("search_pattern");
 const search_text_field = document.getElementById("search_text");
-
-window.next_vis_step = next_vis_step;
-window.prev_vis_step = prev_vis_step;
-window.reset_vis_step = reset_vis_step;
-window.get_kmp_strings = get_kmp_strings;
-window.get_bmh_strings = get_bmh_strings;
-window.get_suffix_array_strings = get_suffix_array_strings;
-window.start_autoplay = start_autoplay;
-window.stop_autoplay = stop_autoplay;
-window.update_vis_step_slider = update_vis_step_slider;
 
 /*
 
@@ -58,7 +51,7 @@ function on_alg_select() {
     next_step_btn.disabled = false;
     prev_step_btn.disabled = true;
     vis_step_slider.disabled = false;
-    vis_speed_select.disabled = false;
+    vis_speed_slider.disabled = false;
     play_btn.disabled = false;
     reset_btn.disabled = false;
     vis_step = 0;
@@ -156,9 +149,10 @@ function get_suffix_array_strings() {
     document.getElementById("KMPTABLE").replaceWith(table);
 }
 
+
 /*
 
-Visualisation Control Button Handlers
+Frame Control Functions
 
 */
 
@@ -186,34 +180,9 @@ function prev_vis_step() {
 }
 
 function reset_vis_step() {
-    stop_autoplay();
     vis_step = 0;
     next_step_btn.disabled = false;
     prev_step_btn.disabled = true;
-
-    refresh_vis_frame();
-}
-
-// Allow for using mouse wheel to change vis_step
-vis_step_slider.addEventListener("wheel", function(e) {
-    // Force vis_step updater to run
-    var event = new Event('input', {bubbles: true});
-    vis_step_slider.dispatchEvent(event);
-
-    e.preventDefault();
-    e.stopPropagation();
-
-    // Determine scroll direction (deltaY < 0 for scroll up, > 0 for scroll down)
-    if (e.deltaY < 0) {
-        vis_step_slider.stepUp();
-    } else {
-        vis_step_slider.stepDown();
-    }
-});
-
-
-function update_vis_step_slider(step) {
-    vis_step = parseInt(step, 10);
     refresh_vis_frame();
 }
 
@@ -225,14 +194,6 @@ Auto Play Functions
 
 let autoplayInterval = null;
 
-vis_speed_select.addEventListener("input", function(e) {
-    if (autoplayInterval != null) {
-        stop_autoplay();
-        start_autoplay();
-    }
-});
-
-
 function start_autoplay() {
     if (autoplayInterval !== null){
         return;
@@ -241,7 +202,8 @@ function start_autoplay() {
         reset_vis_step();
     }
 
-    const delay = parseInt(vis_speed_select.value, 10);
+    // reverse slider value mapping to make it more intuitive
+    const delay = parseInt(vis_speed_slider.max, 10) - parseInt(vis_speed_slider.value, 10);
 
     play_btn.disabled = true;
     pause_btn.disabled = false;
@@ -264,3 +226,74 @@ function stop_autoplay() {
     play_btn.disabled = false;
     pause_btn.disabled = true;
 }
+
+/*
+
+Visualisation Control Input Handlers
+
+*/
+
+select_kmp_btn.addEventListener("click", function(e) {
+    get_kmp_strings();
+});
+
+select_bmh_btn.addEventListener("click", function(e) {
+    get_bmh_strings();
+});
+
+select_suf_arr_btn.addEventListener("click", function(e) {
+    get_suffix_array_strings();
+});
+
+next_step_btn.addEventListener("click", function(e) {
+    stop_autoplay();
+    next_vis_step();
+});
+
+prev_step_btn.addEventListener("click", function(e) {
+    stop_autoplay();
+    prev_vis_step();
+});
+
+reset_btn.addEventListener("click", function(e) {
+    stop_autoplay();
+    reset_vis_step();
+});
+
+play_btn.addEventListener("click", function(e) {
+    start_autoplay();
+});
+
+pause_btn.addEventListener("click", function(e) {
+    stop_autoplay();
+});
+
+
+vis_speed_slider.addEventListener("input", function(e) {
+    if (autoplayInterval != null) {
+        stop_autoplay();
+        start_autoplay();
+    }
+});
+
+vis_step_slider.addEventListener("input", function(e) {
+    vis_step = parseInt(this.value, 10);
+    refresh_vis_frame();
+})
+
+// Allow for using mouse wheel to change vis_step
+vis_step_slider.addEventListener("wheel", function(e) {
+    // Force vis_step updater to run
+    var event = new Event('input', {bubbles: true});
+    this.dispatchEvent(event);
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    // Determine scroll direction (deltaY < 0 for scroll up, > 0 for scroll down)
+    if (e.deltaY < 0) {
+        this.stepUp();
+    } else {
+        this.stepDown();
+    }
+});
