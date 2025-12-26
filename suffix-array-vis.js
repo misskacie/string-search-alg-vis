@@ -12,19 +12,27 @@ function update_suffix_array(unsorted_suffix_array, sorted_suffix_array, search_
     let table = document.createElement('table');
     let row =  table.insertRow()
     let td = row.insertCell();
-    td.appendChild(document.createTextNode("\\(i\\)"));
-    td.style.padding = CELL_PAD;
+    katex.render("i", td, {
+        throwOnError: false
+    });
+
+    // td.appendChild(tnode);
     td = row.insertCell();
-    td.appendChild(document.createTextNode("\\(T_{i}\\)"));
+    katex.render("T_{i}", td, {
+        throwOnError: false
+    });
     td.style.textAlign = "left";
     td.style.padding = CELL_PAD;
 
     td = row.insertCell();
-    td.appendChild(document.createTextNode("\\(S[i]\\)"));
-    td.style.padding = CELL_PAD;
+    katex.render("S[i]", td, {
+        throwOnError: false
+    });
 
     td = row.insertCell();
-    td.appendChild(document.createTextNode("\\(T_{S[i]}\\)"));
+    katex.render("T_{S[i]}", td, {
+        throwOnError: false
+    });
     td.style.textAlign = "left";
     td.style.padding = CELL_PAD;
     

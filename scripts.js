@@ -147,6 +147,7 @@ function get_suffix_array_strings() {
         const li = document.createElement("li");
         li.textContent = item;
         info.appendChild(li);
+        renderMathInElement(li);
     });
     info.id = "infolist";
     document.getElementById("infolist").replaceWith(info);
