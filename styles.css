@@ -68,17 +68,13 @@ body {
     cursor: not-allowed;
 }
 
-/* Secondary navigation buttons */
-#prev-step-btn,
-#next-step-btn {
+.green-btn:not(:disabled) {
     background: #10b981;
 }
 
-#prev-step-btn:hover:not(:disabled),
-#next-step-btn:hover:not(:disabled) {
+.green-btn:hover:not(:disabled) {
     background: #059669;
 }
-
 
 td {
   /* border-collapse: collapse; */
@@ -92,6 +88,7 @@ td {
 
 .zw-td {
     max-width: 0pt;
+    padding: 0px;
 }
 
 .incorrect-td {
@@ -102,6 +99,7 @@ td {
 .correct-td {
     background-color: #00ff00 ;
 }
+
 
 table {
     overflow-x: auto;
@@ -114,4 +112,3 @@ table.suffix-table td {
 #pad-ed {
     height: 200px;
 }
-

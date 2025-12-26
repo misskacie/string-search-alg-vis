@@ -14,21 +14,24 @@
         <button class="btn" onclick="get_bmh_strings()">Visualise BMH</button>
         <button class="btn" onclick="get_suffix_array_strings()">Visualise Suffix Array</button>
         <br>
-        <button id="prev-step-btn" class="btn" onclick="prev_vis_step()" disabled="true">Prev Step</button>
-        <button id="next-step-btn" class="btn" onclick="next_vis_step()">Next Step</button>
-        <button id="play-btn" class="btn" onclick="start_autoplay()">Play</button>
+        <button id="next-step-btn" class="btn green-btn" onclick="next_vis_step()" disabled>Next Step</button>
+        <button id="prev-step-btn" class="btn green-btn" onclick="prev_vis_step()" disabled>Prev Step</button>
+        <button id="play-btn" class="btn" onclick="start_autoplay()" disabled>Play</button>
         <button id="pause-btn" class="btn" onclick="stop_autoplay()" disabled>Pause</button>
-        <button id="reset-btn" class="btn" onclick="reset_vis_step()">Reset</button>
+        <button id="reset-btn" class="btn" onclick="reset_vis_step()" disabled>Reset</button>
+        <br>
         <label style="margin-left:10px;">
             Speed
-            <select id="speed-select">
+            <select id="vis-speed-select" disabled>
                 <option value="1200">Slow</option>
                 <option value="700" selected>Normal</option>
                 <option value="300">Fast</option>
             </select>
         </label>
+
+        <label for="vis_step_slider">Time-Step: </label>
+        <input type="range" id="vis-step-slider" min="0" max="100" value="0" step="1" oninput="update_vis_step_slider(this.value)" disabled>
 	</div>
-    <br>
     <div class="vis-container">
         <ol id="infolist"></ol>
         <table id ="KMPFAILURE"></table>
