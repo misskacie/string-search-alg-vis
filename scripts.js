@@ -10,8 +10,8 @@ import {update_kmp_vis, update_failure_func} from "./kmp-vis.js";
 var vis_step = 0;
 var max_vis_step = 0;
 
-var found; 
-var steps; 
+var found;
+var steps;
 
 var search_pattern;
 var search_text;
@@ -24,49 +24,54 @@ const prev_step_btn = document.getElementById("prev-step-btn");
 
 window.next_vis_step = next_vis_step;
 window.prev_vis_step = prev_vis_step;
+window.reset_vis_step = reset_vis_step;
+
 window.get_kmp_strings = get_kmp_strings;
 window.get_bmh_strings = get_bmh_strings;
 window.get_suffix_array_strings = get_suffix_array_strings;
+window.start_autoplay = start_autoplay;
+window.stop_autoplay = stop_autoplay;
+
+function refresh_vis_frame() {
+    if (mode == "KMP") {
+        update_kmp_vis(steps, found, vis_step, search_pattern, search_text);
+    } else if (mode == "BMH") {
+        update_bmh_vis(steps, found, vis_step, search_pattern, search_text);
+    } else if (mode == "SUFARR") {
+        let [min, mid, max] = steps[vis_step];
+        update_suffix_array(unsorted_suffix_array, sorted_suffix_array, search_text, search_pattern, min, mid, max);
+    }
+}
 
 function next_vis_step() {
     prev_step_btn.disabled = false;
     if (vis_step < max_vis_step) {
         vis_step += 1;
-        if (mode == "KMP") {
-            update_kmp_vis(steps, found, vis_step, search_pattern, search_text);
-        } else if (mode == "BMH") {
-            update_bmh_vis(steps, found, vis_step, search_pattern, search_text);
-        } else if (mode == "SUFARR") {
-            let [min, mid, max] = steps[vis_step];
-            update_suffix_array(unsorted_suffix_array, sorted_suffix_array, search_text, search_pattern, min, mid, max);
-            MathJax.typeset();
-        }
-        
+        refresh_vis_frame();
     }
 
     if (vis_step == max_vis_step) {
         next_step_btn.disabled = true;
-    }   
+    }
 }
 
 function prev_vis_step() {
     next_step_btn.disabled = false;
     if (vis_step > 0) {
         vis_step -= 1;
-        if (mode == "KMP") {
-            update_kmp_vis(steps, found, vis_step, search_pattern, search_text);
-        } else if (mode == "BMH") {
-            update_bmh_vis(steps, found, vis_step, search_pattern, search_text);
-    
-        } else if (mode == "SUFARR") {
-            let [min, mid, max] = steps[vis_step];
-            update_suffix_array(unsorted_suffix_array, sorted_suffix_array, search_text, search_pattern, min, mid, max);
-            MathJax.typeset();
-        }
-    } 
+        refresh_vis_frame();
+    }
     if (vis_step == 0) {
         prev_step_btn.disabled = true;
-    }    
+    }
+}
+
+function reset_vis_step() {
+    stop_autoplay();
+    vis_step = 0;
+    next_step_btn.disabled = false;
+    prev_step_btn.disabled = true;
+    refresh_vis_frame();
 }
 
 function get_kmp_strings() {
@@ -80,8 +85,8 @@ function get_kmp_strings() {
     [found, steps] = kmp_search(search_pattern, search_text);
 
     max_vis_step = steps.length - 1;
-    
-    mode = "KMP"; 
+
+    mode = "KMP";
     vis_step = 0;
     next_step_btn.disabled = false;
     prev_step_btn.disabled = true;
@@ -104,8 +109,8 @@ function get_bmh_strings() {
     const bad_shift_array = bmh_bad_shift_array(search_pattern);
     [found, steps] = bmh_search(search_pattern, search_text);
     max_vis_step = steps.length - 1;
-    
-    
+
+
     vis_step = 0;
     next_step_btn.disabled = false;
     prev_step_btn.disabled = true;
@@ -134,8 +139,8 @@ function get_suffix_array_strings() {
 
 
     const suffix_steps = [
-        "Create array of pointers i to suffixes in text \\(T_{i}\\)  ", 
-        "Sort array of suffix pointers lexagraphically to get \\(S[i]\\)", 
+        "Create array of pointers i to suffixes in text \\(T_{i}\\)  ",
+        "Sort array of suffix pointers lexagraphically to get \\(S[i]\\)",
         "Binary search the sorted suffix array, looking for the pattern, comparing at worst \\(m\\) characters each time, before determining a string is not a prefix",
         "If all \\(m\\) characters match, the pattern occurs at location \\(S[i]\\)"
     ];
@@ -156,6 +161,40 @@ function get_suffix_array_strings() {
     let table = document.createElement('table');
     table.id = "KMPTABLE";
     document.getElementById("KMPTABLE").replaceWith(table);
-    
-    MathJax.typeset();
 }
+
+let autoplayInterval = null;
+
+function start_autoplay() {
+    if (autoplayInterval !== null) return;
+
+    const speedSelect = document.getElementById("speed-select");
+    const delay = parseInt(speedSelect.value, 10);
+
+    document.getElementById("play-btn").disabled = true;
+    document.getElementById("pause-btn").disabled = false;
+
+    autoplayInterval = setInterval(() => {
+        // Call your existing step function
+        next_vis_step();
+
+        // Optional: stop automatically if Next becomes disabled
+        const nextBtn = document.getElementById("next-step-btn");
+        if (nextBtn && nextBtn.disabled) {
+            stop_autoplay();
+        }
+    }, delay);
+}
+
+function stop_autoplay() {
+    if (autoplayInterval !== null) {
+        clearInterval(autoplayInterval);
+        autoplayInterval = null;
+    }
+
+    document.getElementById("play-btn").disabled = false;
+    document.getElementById("pause-btn").disabled = true;
+}
+
+
+

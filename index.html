@@ -7,7 +7,7 @@
 </head>
 <body>
 	<div class="btn-container">
-        Enter Search Pattern: <input type="text" id="search_pattern" value="abcabc">, 
+        Enter Search Pattern: <input type="text" id="search_pattern" value="abcabc">
         Enter Search Text   : <input type="text" id="search_text" value="dabcsabcadhsfjasfabeabcabcdefg">
         <br>
 		<button class="btn" onclick="get_kmp_strings()">Visualise KMP</button>
@@ -16,18 +16,28 @@
         <br>
         <button id="prev-step-btn" class="btn" onclick="prev_vis_step()" disabled="true">Prev Step</button>
         <button id="next-step-btn" class="btn" onclick="next_vis_step()">Next Step</button>
+        <button id="play-btn" class="btn" onclick="start_autoplay()">Play</button>
+        <button id="pause-btn" class="btn" onclick="stop_autoplay()" disabled>Pause</button>
+        <button id="reset-btn" class="btn" onclick="reset_vis_step()">Reset</button>
+        <label style="margin-left:10px;">
+            Speed
+            <select id="speed-select">
+                <option value="1200">Slow</option>
+                <option value="700" selected>Normal</option>
+                <option value="300">Fast</option>
+            </select>
+        </label>
 	</div>
-    <ol id="infolist"></ol>
-    <table id ="KMPFAILURE"></table>
     <br>
-    <table id ="KMPTABLE"></table>
-    <ul id="KMP-Steps"></ul> <br>
-    <div id="pad-ed">
-        <br><br><br><br><br><br><br><br><br><br>
-    <br><br><br>
+    <div class="vis-container">
+        <ol id="infolist"></ol>
+        <table id ="KMPFAILURE"></table>
+        <br>
+        <table id ="KMPTABLE"></table>
+        <ul id="KMP-Steps"></ul> <br>
+        <div id="pad-ed">
+        </div>
     </div>
-    
-    
 </body>
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.27/dist/katex.min.css" integrity="sha384-Pu5+C18nP5dwykLJOhd2U4Xen7rjScHN/qusop27hdd2drI+lL5KvX7YntvT8yew" crossorigin="anonymous">
@@ -36,4 +46,4 @@
     onload="renderMathInElement(document.body);"></script>
 <script src="scripts.js" type="module"></script>
 
-</html> 
+</html>
