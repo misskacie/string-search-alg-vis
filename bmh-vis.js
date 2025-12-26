@@ -1,5 +1,4 @@
 export{update_bmh_vis, add_bmh_shift_array_html};
-const CELL_PAD = "5pt";
 let DARR = "\u2193" // ↓
 let UARR = "\u2191" // ↑
 var i, td, td1, td2;
@@ -11,19 +10,16 @@ function add_bmh_shift_array_html(bad_shift_array, search_pattern){
     td2 = row2.insertCell();
     td1.appendChild(document.createTextNode("P[]"));
     td2.appendChild(document.createTextNode("L[]"));
-    td2.style.padding = CELL_PAD;
     // Add padding for the offset alignment of pattern to text
     for (const [key, value] of bad_shift_array.entries()) {
         td1 = row1.insertCell();
         td2 = row2.insertCell();
-        td2.style.padding = CELL_PAD;
         td1.appendChild(document.createTextNode(key));
         td2.appendChild(document.createTextNode(value));
     }
     td1 = row1.insertCell();
     td2 = row2.insertCell();
     td1.style.maxWidth = "0pt";
-    td2.style.padding = CELL_PAD;
     td1.appendChild(document.createTextNode('rest'));
     td2.appendChild(document.createTextNode(search_pattern.length));
 
@@ -46,31 +42,31 @@ function update_bmh_vis(steps, found, vis_step, search_pattern, search_text) {
     for (i = 0; i < search_text.length; i++) {
         td1 = row1.insertCell();
         td2 = row2.insertCell();
-        td1.style.maxWidth = "0pt";
+        td1.className = "zw-td";
+        td2.className = "zw-td";
         let text1 = "", text2 = "";
         if (bmh_s == i) {
             text1 = "s="+String(bmh_s);
             text2 = DARR;
-        } 
+        }
         td1.appendChild(document.createTextNode(text1));
         td2.appendChild(document.createTextNode(text2));
     }
 
     let row =  table.insertRow()
-    
+
     for (i = 0; i < search_text.length; i++) {
         td = row.insertCell();
-        td.style.padding = CELL_PAD;
         td.style.width = String(100/search_text.length) + "%";
         td.appendChild(document.createTextNode(search_text[i]));
         if (i == bmh_s+bmh_i) {
             if (search_text[bmh_s + bmh_i] == search_pattern[bmh_i]) {
-            td.style.backgroundColor = '#00FF00';
+                td.className = "correct-td";
             } else {
-                td.style.backgroundColor = '#FF0000';
+                td.className = "incorrect-td";
             }
         } else if (i < search_pattern.length+bmh_s && i >= bmh_s + bmh_i) {
-           td.style.backgroundColor = '#00FF00'; 
+            td.className = "correct-td";
         }
     }
 
@@ -85,19 +81,18 @@ function update_bmh_vis(steps, found, vis_step, search_pattern, search_text) {
     for (i = 0; i < search_pattern.length; i++) {
         td = row.insertCell();
         td.appendChild(document.createTextNode(search_pattern[i]));
-        td.style.padding = CELL_PAD;
-        td.style.width = String(100/search_text.length) + "%";
+        td.className = "zw-td";
         if (i == bmh_i) {
             if (search_text[bmh_s + bmh_i] == search_pattern[bmh_i]) {
-            td.style.backgroundColor = '#00FF00';
+                td.className = "correct-td";
             } else {
-                td.style.backgroundColor = '#FF0000';
+                td.className = "incorrect-td";
             }
         } else if (i >= bmh_i) {
-           td.style.backgroundColor = '#00FF00'; 
+            td.className = "correct-td";
         }
-        
-        
+
+
     }
 
     row1 = table.insertRow();
@@ -105,14 +100,13 @@ function update_bmh_vis(steps, found, vis_step, search_pattern, search_text) {
     for (i = 0; i < search_text.length; i++) {
         td1 = row1.insertCell();
         td2 = row2.insertCell();
-        td1.style.width = String(100/search_text.length) + "%";
-        td2.style.maxWidth = "0pt";
-        // td2.style.textAlign = "right";
+        td1.className = "zw-td";
+        td2.className = "zw-td";
         let text1 = "", text2 = "";
         if (bmh_s + bmh_i == i) {
             text1 = UARR;
             text2 = "i="+String(bmh_i);
-        } 
+        }
         td1.appendChild(document.createTextNode(text1));
         td2.appendChild(document.createTextNode(text2));
     }

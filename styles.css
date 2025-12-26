@@ -1,13 +1,117 @@
+* {
+    box-sizing: border-box;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+body {
+    margin: 0;
+    padding: 20px;
+    background: #f5f7fb;
+    color: #333;
+    line-height: 1.5;
+}
+
+.btn-container {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    max-width: 1000px;
+    margin: 0 auto 25px auto;
+}
+
+.vis-container {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    max-width: 1000px;
+    margin: 0 auto 25px auto;
+}
+
+.btn-container input[type="text"] {
+    padding: 8px 10px;
+    margin: 6px 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    min-width: 260px;
+    font-size: 14px;
+}
+
+.btn-container input[type="text"]:focus {
+    outline: none;
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.15);
+}
+
+.btn {
+    padding: 10px 16px;
+    margin: 8px 6px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    background: #4f46e5;
+    color: white;
+    transition: background 0.2s, transform 0.1s, box-shadow 0.1s;
+}
+
+.btn:hover:not(:disabled) {
+    background: #4338ca;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(79, 70, 229, 0.25);
+}
+
+.btn:disabled {
+    background: #c7c7c7;
+    cursor: not-allowed;
+}
+
+/* Secondary navigation buttons */
+#prev-step-btn,
+#next-step-btn {
+    background: #10b981;
+}
+
+#prev-step-btn:hover:not(:disabled),
+#next-step-btn:hover:not(:disabled) {
+    background: #059669;
+}
+
 
 td {
   /* border-collapse: collapse; */
   /* border: 1px solid black; */
   text-align: center;
   width:fit-content;
-  padding: auto;
+  padding: 10px;
+  font-family: monospace;
+  text-shadow: #ffffff,
+}
+
+.zw-td {
+    max-width: 0pt;
+}
+
+.incorrect-td {
+    background-color: #ff0000 ;
+    color: #ffffff;
+}
+
+.correct-td {
+    background-color: #00ff00 ;
 }
 
 table {
-    table-layout: fixed;
-    overflow-x: auto; 
+    overflow-x: auto;
 }
+
+table.suffix-table td {
+    text-align: left;
+}
+
+#pad-ed {
+    height: 200px;
+}
+
