@@ -4,6 +4,7 @@ import {bmh_search, bmh_bad_shift_array} from "./bmh-alg.js";
 import {add_bmh_shift_array_html, update_bmh_vis} from "./bmh-vis.js";
 import {kmp_search, kmp_failure_function} from "./kmp-alg.js";
 import {update_kmp_vis, update_failure_func} from "./kmp-vis.js";
+import {update_failure_func_vis} from "./kmp-failure-vis.js";
 
 var vis_step = 0;
 var max_vis_step = 0;
@@ -18,6 +19,7 @@ const root = document.documentElement;
 const select_suf_arr_btn = document.getElementById("select-suf-arr-btn");
 const select_bmh_btn = document.getElementById("select-bmh-btn");
 const select_kmp_btn = document.getElementById("select-kmp-btn");
+const select_kmp_failure_btn = document.getElementById("select-kmp-failure-btn");
 const next_step_btn = document.getElementById("next-step-btn");
 const prev_step_btn = document.getElementById("prev-step-btn");
 const vis_step_slider = document.getElementById("vis-step-slider");
@@ -30,9 +32,12 @@ const search_pattern_field = document.getElementById("search_pattern");
 const search_text_field = document.getElementById("search_text");
 
 const kmp_vis_div = document.getElementById("kmp-vis-div");
+const kmp_failure_vis_div = document.getElementById("kmp-failure-vis-div");
 const bmh_vis_div = document.getElementById("bmh-vis-div");
 const suffix_array_vis_div = document.getElementById("suffix-array-vis-div");
+const info_box_div = document.getElementById("info-box-div");
 
+var failure_func, failure_steps;
 /*
 
 Refresh Functions
@@ -56,6 +61,8 @@ function refresh_vis_frame() {
 
     if (mode == "KMP") {
         update_kmp_vis(steps, found, vis_step, search_pattern, search_text);
+    } else if (mode == "KMP-FAILURE") {
+        update_failure_func_vis(failure_func, failure_steps, vis_step, search_pattern);
     } else if (mode == "BMH") {
         update_bmh_vis(steps, found, vis_step, search_pattern, search_text);
     } else if (mode == "SUFARR") {
@@ -71,12 +78,20 @@ function on_alg_select() {
     vis_step_slider.disabled = false;
     vis_speed_slider.disabled = false;
     vis_padding_slider.disabled = false;
+
     play_btn.disabled = false;
     reset_btn.disabled = false;
 
     kmp_vis_div.hidden = true;
+    kmp_failure_vis_div.hidden = true;
     bmh_vis_div.hidden = true;
     suffix_array_vis_div.hidden = true;
+    info_box_div.hidden = true;
+
+    select_bmh_btn.className = "btn btn-unselected";
+    select_kmp_btn.className = "btn btn-unselected";
+    select_kmp_failure_btn.className = "btn btn-unselected";
+    select_suf_arr_btn.className = "btn btn-unselected";
 
 
     vis_step = 0;
@@ -99,7 +114,8 @@ function get_kmp_strings() {
     if (!on_alg_select()) {
         return;
     }
-    const failure_func = kmp_failure_function(search_pattern);
+    var failure_func, failure_steps;
+    [failure_func, failure_steps] = kmp_failure_function(search_pattern);
     [found, steps] = kmp_search(search_pattern, search_text);
 
     max_vis_step = steps.length - 1;
@@ -108,6 +124,22 @@ function get_kmp_strings() {
     refresh_vis_frame();
     update_failure_func(failure_func, search_pattern);
     kmp_vis_div.hidden = false;
+    select_kmp_btn.className = "btn btn-selected";
+}
+
+function vis_kmp_failure_func() {
+    if (!on_alg_select()) {
+        return;
+    }
+    [failure_func, failure_steps] = kmp_failure_function(search_pattern);
+
+    max_vis_step = failure_steps.length - 1;
+
+    mode = "KMP-FAILURE";
+    refresh_vis_frame();
+    update_failure_func_vis(failure_func, failure_steps, vis_step, search_pattern);
+    kmp_failure_vis_div.hidden = false;
+    select_kmp_failure_btn.className = "btn btn-selected";
 }
 
 function get_bmh_strings() {
@@ -123,6 +155,7 @@ function get_bmh_strings() {
     refresh_vis_frame();
     add_bmh_shift_array_html(bad_shift_array, search_pattern);
     bmh_vis_div.hidden = false;
+    select_bmh_btn.className = "btn btn-selected";
 }
 
 function get_suffix_array_strings() {
@@ -141,8 +174,9 @@ function get_suffix_array_strings() {
     const suffix_steps = [
         "Create array of pointers i to suffixes in text \\(T_{i}\\)  ",
         "Sort array of suffix pointers lexagraphically to get \\(S[i]\\)",
-        "Binary search the sorted suffix array, looking for the pattern, comparing at worst \\(m\\) characters each time, before determining a string is not a prefix",
-        "If all \\(m\\) characters match, the pattern occurs at location \\(S[i]\\)"
+        "Binary search the sorted suffix array, looking for the pattern, comparing at worst \\(\\\\ \\)\\(\\texttt{pattern\\_length}\\) characters " +
+        "each time, before determining the \\(\\texttt{pattern}\\) is not a prefix",
+        "If all \\(\\texttt{pattern\\_length}\\) characters match, the pattern occurs at location \\(S[i]\\)"
     ];
 
     const info = document.createElement("ol");
@@ -157,6 +191,7 @@ function get_suffix_array_strings() {
     document.getElementById("sufarrinfolist").replaceWith(info);
 
     suffix_array_vis_div.hidden = false;
+    select_suf_arr_btn.className = "btn btn-selected";
 }
 
 
@@ -237,6 +272,10 @@ Visualisation Control Input Handlers
 
 select_kmp_btn.addEventListener("click", function(e) {
     get_kmp_strings();
+});
+
+select_kmp_failure_btn.addEventListener("click", function(e) {
+    vis_kmp_failure_func();
 });
 
 select_bmh_btn.addEventListener("click", function(e) {

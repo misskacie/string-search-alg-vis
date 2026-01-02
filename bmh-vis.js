@@ -5,6 +5,7 @@ let NBSP = "\u00A0" // non breaking space, so that spaces are preserved in copie
 var i, td, td1, td2;
 const vis_table_id = "BMHTABLE";
 const shift_table_id = "BMHFAILURE";
+const bmh_pseudocode_table_id = "BMH-PSEUDOCODE";
 
 function add_bmh_shift_array_html(bad_shift_array, search_pattern){
     let table = document.createElement('table');
@@ -59,10 +60,14 @@ function update_bmh_vis(steps, found, vis_step, search_pattern, search_text) {
 
     let row =  table.insertRow()
 
-    for (i = 0; i < search_text.length; i++) {
+    for (i = 0; i < search_text.length+ search_pattern.length + 3; i++) {
         td = row.insertCell();
         td.style.width = String(100/search_text.length) + "%";
-        td.appendChild(document.createTextNode(search_text[i]));
+        let text = NBSP;
+        if (i < search_text.length) {
+            text = search_text[i]
+        }
+        td.appendChild(document.createTextNode(text));
         if (i == bmh_s+bmh_i) {
             if (search_text[bmh_s + bmh_i] == search_pattern[bmh_i]) {
                 td.className = "correct-td";
@@ -119,5 +124,48 @@ function update_bmh_vis(steps, found, vis_step, search_pattern, search_text) {
     let bmh_box = document.getElementById(vis_table_id);
     table.id = vis_table_id;
     bmh_box.replaceWith(table);
+
+
+    // Add the pseudocode vis:
+    table = document.createElement('table');
+    table.id = bmh_pseudocode_table_id;
+    row = table.insertRow()
+    td = row.insertCell();
+    let pseudocode_lines = [
+        "\\texttt{function bmh\\_search(pattern, text):}",
+        "\\qquad \\texttt{L} \\leftarrow \\texttt{create\\_shift\\_array(pattern)}",
+        "\\qquad \\texttt{(s, i)} \\leftarrow \\texttt{(0, pattern\\_length - 1)}",
+        "\\qquad \\texttt{while s < text\\_length - pattern\\_length}",
+        "\\qquad \\qquad \\texttt{if text[s + i] != pattern[i]}",
+        "\\qquad \\qquad \\qquad \\texttt{s} \\leftarrow \\texttt{L[text[s + pattern\\_length - 1]]}",
+        "\\qquad \\qquad \\qquad \\texttt{i} \\leftarrow \\texttt{pattern\\_length - 1)}",
+        "\\qquad \\qquad \\texttt{else if i = 0}",
+        "\\qquad \\qquad \\qquad  \\texttt{return s}",
+        "\\qquad \\qquad \\texttt{else}",
+        "\\qquad \\qquad \\qquad \\texttt{i} \\leftarrow \\texttt{i - 1}",
+        "\\qquad \\texttt{return not\\_found}"
+    ]
+
+    let highlight_index = steps[vis_step][2];
+
+    for (i = 0; i < pseudocode_lines.length; i++) {
+        td.className = "pseudocode-td";
+        katex.render(pseudocode_lines[i], td, {
+            throwOnError: false
+        });
+
+        if ( (highlight_index == 0 && (i == 4 || i == 5 || i == 6))
+            || (highlight_index == 1 && (i == 7 || i == 8 ))
+            || (highlight_index == 2 && (i == 9 || i == 10 ))
+            || (highlight_index == 3 && (i == 11))
+        ) {
+
+            td.className = "pseudocode-highlighted-td";
+        }
+
+        row = table.insertRow();
+        td = row.insertCell();
+    }
+    document.getElementById(bmh_pseudocode_table_id).replaceWith(table);
 }
 

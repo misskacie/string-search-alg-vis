@@ -14,87 +14,105 @@ function update_suffix_array(unsorted_suffix_array, sorted_suffix_array, search_
     table.className = "suffix-table";
     let row =  table.insertRow()
     let td = row.insertCell();
+    td.className = "suffix-array-td";
     katex.render("i", td, {
         throwOnError: false
     });
 
     td = row.insertCell();
+    td.className = "suffix-array-td";
     td.appendChild(document.createTextNode(NBSP));
 
     // td.appendChild(tnode);
     td = row.insertCell();
+    td.className = "suffix-array-td";
     katex.render("T_{i}", td, {
         throwOnError: false
     });
-    td.style.textAlign = "left";
 
     td = row.insertCell();
+    td.className = "suffix-array-td";
     td.appendChild(document.createTextNode(NBSP+NBSP));
 
     td = row.insertCell();
+    td.className = "suffix-array-td";
     katex.render("S[i]", td, {
         throwOnError: false
     });
 
     td = row.insertCell();
+    td.className = "suffix-array-td";
     td.appendChild(document.createTextNode(NBSP));
 
     td = row.insertCell();
+    td.className = "suffix-array-td";
     katex.render("T_{S[i]}", td, {
         throwOnError: false
     });
-    td.style.textAlign = "left";
 
     // Add padding for the offset alignment of pattern to text
      for (i = 0; i <= search_text.length; i++) {
         row =  table.insertRow()
         td = row.insertCell();
+        td.className = "suffix-array-td";
         td.appendChild(document.createTextNode(i));
 
         td = row.insertCell();
+        td.className = "suffix-array-td";
         td = row.insertCell();
+        td.className = "suffix-array-td";
         // Inefficient solution to get the suffix index from the array of strings.
         // as if it was a pointer.
         td.appendChild(document.createTextNode(unsorted_suffix_array[i]));
 
         td = row.insertCell();
+        td.className = "suffix-array-td";
         td = row.insertCell();
+        td.className = "suffix-array-td";
         // Inefficient solution to get the suffix index from the array of strings.
         // as if it was a pointer.
         td.appendChild(document.createTextNode(search_text.length - sorted_suffix_array[i].length));
 
         td = row.insertCell();
+        td.className = "suffix-array-td";
         td = row.insertCell();
+        td.className = "suffix-array-td";
         td.appendChild(document.createTextNode(sorted_suffix_array[i]));
 
 
         if ((i < min) || (i > max)) {
-            td.className = "incorrect-td";
+            td.className = "suffix-array-td incorrect-td";
         }
 
 
         if (i == mid) {
             if (sorted_suffix_array[i].startsWith(search_pattern))  {
-                td.className = "correct-td";
+                td.className = "suffix-array-td correct-td";
             } else {
-                td.className = "incorrect-td";
+                td.className = "suffix-array-td incorrect-td";
             }
             td = row.insertCell();
+            td.className = "suffix-array-td";
             td.appendChild(document.createTextNode(LARR));
             td = row.insertCell();
+            td.className = "suffix-array-td";
             td.appendChild(document.createTextNode("mid"));
         }
         if (i == min) {
             td = row.insertCell();
+            td.className = "suffix-array-td";
             td.appendChild(document.createTextNode(LARR));
             td = row.insertCell();
+            td.className = "suffix-array-td";
             td.appendChild(document.createTextNode("min"));
         }
 
         if (i == max) {
             td = row.insertCell();
+            td.className = "suffix-array-td";
             td.appendChild(document.createTextNode(LARR));
             td = row.insertCell();
+            td.className = "suffix-array-td";
             td.appendChild(document.createTextNode("max"));
         }
 
