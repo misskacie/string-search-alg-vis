@@ -13,8 +13,8 @@ function add_bmh_shift_array_html(bad_shift_array, search_pattern){
     let row2 = table.insertRow()
     td1 = row1.insertCell();
     td2 = row2.insertCell();
-    td1.appendChild(document.createTextNode("P[]"));
-    td2.appendChild(document.createTextNode("L[]"));
+    td1.appendChild(document.createTextNode("char"));
+    td2.appendChild(document.createTextNode("L[char]"));
     // Add padding for the offset alignment of pattern to text
     for (const [key, value] of bad_shift_array.entries()) {
         td1 = row1.insertCell();
@@ -143,7 +143,15 @@ function update_bmh_vis(steps, found, vis_step, search_pattern, search_text) {
         "\\qquad \\qquad \\qquad  \\texttt{return s}",
         "\\qquad \\qquad \\texttt{else}",
         "\\qquad \\qquad \\qquad \\texttt{i} \\leftarrow \\texttt{i - 1}",
-        "\\qquad \\texttt{return not\\_found}"
+        "\\qquad \\texttt{return not\\_found}",
+        NBSP,
+        "\\texttt{function create\\_shift\\_array(pattern):}",
+        "\\qquad // \\texttt{ for alphabet } \\sigma \\texttt{ such as ASCII } \\sigma=\\texttt{256}",
+        "\\qquad \\texttt{for v} \\leftarrow \\texttt{0 to } \\sigma \\texttt{ - 1}",
+        "\\qquad \\qquad \\texttt{L[v]} \\leftarrow \\texttt{pattern\\_length}",
+        "\\qquad \\texttt{for i} \\leftarrow \\texttt{0 to pattern\\_length - 2}",
+        "\\qquad \\qquad \\texttt{L[pattern[i]]} \\leftarrow \\texttt{pattern\\_length - i - 1}",
+
     ]
 
     let highlight_index = steps[vis_step][2];
