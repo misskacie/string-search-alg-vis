@@ -1,6 +1,7 @@
 * {
     box-sizing: border-box;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    /* background: var(--background-color); */
 }
 
 :root {
@@ -11,7 +12,7 @@
     --kmp-failure-prefix-color: var(--correct);
     --kmp-failure-overlap-top: 20%;
     --kmp-failure-overlap-bottom: calc(100% - var(--kmp-failure-overlap-top));
-
+    --background-color: white;
      /* #d5c9df ; */
     --correct: #00ff00;
     --incorrect: #ff0000;
@@ -24,7 +25,7 @@
 
 body {
     margin: 0 auto 2em auto;
-    background: #f5f7fb;
+    background: var(--background-color);
     color: #333;
     line-height: 1;
     display: grid;
@@ -36,30 +37,29 @@ body {
 }
 
 .btn-container {
-    background: white;
     padding: 0px;
     border-radius: 0px;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
     margin: 0 auto 25px auto;
+    width:50vw;
 }
 
 
 
 .vis-container {
-    background: white;
     padding: 0px;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
     margin: 0 auto 25px auto;
     overflow-x:hidden;
     overflow-y:hidden;
-    max-width: 50vw;
-    max-height: 100vh;
+    width: 50vw;
+    max-height: 80vh;
     /* max-width: 1000px; */
 }
 
 .scrollable-div {
     overflow-x: scroll;
-    height:auto;
+    max-height:35vh;
     display: block;
 }
 
@@ -130,6 +130,19 @@ td {
   font-family: monospace;
   text-shadow: #ffffff;
   font-size: var(--td-font-size);
+}
+
+th {
+    position:sticky;
+    top: 0;
+    text-align: left;
+    width:fit-content;
+    padding: var(--vis-padding);
+    font-family: monospace;
+    text-shadow: #ffffff;
+    font-size: var(--td-font-size);
+    background: var(--background-color);
+    z-index: 1000;
 }
 
 .pseudocode-td {

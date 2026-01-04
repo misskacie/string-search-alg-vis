@@ -15,28 +15,28 @@ function update_suffix_array(unsorted_suffix_array, sorted_suffix_array, search_
     let table = document.createElement('table');
     table.className = "suffix-table";
     let row =  table.insertRow()
-    let td = row.insertCell();
+    let td = row.appendChild(document.createElement("th"));
     td.className = "suffix-array-td";
     katex.render("i", td, {
         throwOnError: false
     });
 
-    td = row.insertCell();
+    td = row.appendChild(document.createElement("th"));
     td.className = "suffix-array-td";
     td.appendChild(document.createTextNode(NBSP));
 
     // td.appendChild(tnode);
-    td = row.insertCell();
+    td = row.appendChild(document.createElement("th"));
     td.className = "suffix-array-td";
     katex.render("T_{i}", td, {
         throwOnError: false
     });
 
-    td = row.insertCell();
+    td = row.appendChild(document.createElement("th"));
     td.className = "suffix-array-td";
     td.appendChild(document.createTextNode(NBSP+NBSP));
 
-    td = row.insertCell();
+    td = row.appendChild(document.createElement("th"));
     td.className = "suffix-array-td";
     katex.render("S[i]", td, {
         throwOnError: false
@@ -46,7 +46,7 @@ function update_suffix_array(unsorted_suffix_array, sorted_suffix_array, search_
     td.className = "suffix-array-td";
     td.appendChild(document.createTextNode(NBSP));
 
-    td = row.insertCell();
+    td = row.appendChild(document.createElement("th"));
     td.className = "suffix-array-td";
     katex.render("T_{S[i]}", td, {
         throwOnError: false
@@ -82,6 +82,9 @@ function update_suffix_array(unsorted_suffix_array, sorted_suffix_array, search_
         // Inefficient solution to get the suffix index from the array of strings.
         // as if it was a pointer.
         td.appendChild(document.createTextNode(search_text.length - sorted_suffix_array[i].length));
+        if (i == mid){
+            td.id = 'center-element-suffarr';
+        }
 
         td = row.insertCell();
         td.className = "suffix-array-td";
@@ -130,6 +133,7 @@ function update_suffix_array(unsorted_suffix_array, sorted_suffix_array, search_
     table.id = suf_arr_table_id;
     document.getElementById(suf_arr_table_id).replaceWith(table);
 
+    document.getElementById('center-element-suffarr').scrollIntoView({ behavior: 'instant', block: 'center', inline: 'start', container: 'nearest'});
     show_match_with_current_suffix(sorted_suffix_array[mid], search_pattern);
 
 
