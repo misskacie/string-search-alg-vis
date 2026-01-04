@@ -65,7 +65,7 @@ function update_bmh_vis(steps, found, vis_step, search_pattern, search_text) {
         td.style.width = String(100/search_text.length) + "%";
         let text = NBSP;
         if (i < search_text.length) {
-            text = search_text[i]
+            text = search_text[i].replaceAll(" ", NBSP);
         }
         td.appendChild(document.createTextNode(text));
         if (i == bmh_s+bmh_i) {
@@ -90,7 +90,7 @@ function update_bmh_vis(steps, found, vis_step, search_pattern, search_text) {
 
     for (i = 0; i < search_pattern.length; i++) {
         td = row.insertCell();
-        td.appendChild(document.createTextNode(search_pattern[i]));
+        td.appendChild(document.createTextNode(search_pattern[i].replaceAll(" ", NBSP)));
         td.className = "zw-td";
         if (i == bmh_i) {
             if (search_text[bmh_s + bmh_i] == search_pattern[bmh_i]) {
@@ -144,7 +144,7 @@ function update_bmh_vis(steps, found, vis_step, search_pattern, search_text) {
         "\\qquad \\qquad \\texttt{else}",
         "\\qquad \\qquad \\qquad \\texttt{i} \\leftarrow \\texttt{i - 1}",
         "\\qquad \\texttt{return not\\_found}",
-        NBSP,
+        "~",
         "\\texttt{function create\\_shift\\_array(pattern):}",
         "\\qquad // \\texttt{ for alphabet } \\sigma \\texttt{ such as ASCII } \\sigma=\\texttt{256}",
         "\\qquad \\texttt{for v} \\leftarrow \\texttt{0 to } \\sigma \\texttt{ - 1}",

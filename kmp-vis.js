@@ -58,7 +58,7 @@ function update_kmp_vis(steps, found, vis_step, search_pattern, search_text) {
         td2.appendChild(document.createTextNode(text2));
     }
 
-    let row =  table.insertRow()
+    let row = table.insertRow()
 
     // Add empty cells at end so i counter is not clipped
     for (i = 0; i < search_text.length + search_pattern.length + 3; i++) {
@@ -67,7 +67,7 @@ function update_kmp_vis(steps, found, vis_step, search_pattern, search_text) {
         td.style.maxWidth = String(100 / search_text.length) + "%";
         let text = NBSP;
         if (i < search_text.length) {
-            text = search_text[i]
+            text = search_text[i].replaceAll(" ", NBSP);
         }
         td.appendChild(document.createTextNode(text));
         if (i - kmp_s < search_pattern.length) {
@@ -94,7 +94,7 @@ function update_kmp_vis(steps, found, vis_step, search_pattern, search_text) {
 
     for (i = 0; i < search_pattern.length; i++) {
         td = row.insertCell();
-        td.appendChild(document.createTextNode(search_pattern[i]));
+        td.appendChild(document.createTextNode(search_pattern[i].replaceAll(" ", NBSP)));
         if (i == kmp_i && i < search_pattern.length) {
             if (search_text[kmp_s + kmp_i] == search_pattern[kmp_i]) {
                 td.className = "correct-td";
@@ -106,6 +106,8 @@ function update_kmp_vis(steps, found, vis_step, search_pattern, search_text) {
             td.className = "correct-td";
         }
     }
+    // make sure the last td in pattern is always by using scroll into view on this id
+    td.id = "center-element"
 
 
     row1 = table.insertRow();
@@ -130,6 +132,9 @@ function update_kmp_vis(steps, found, vis_step, search_pattern, search_text) {
     let kmp_box = document.getElementById(vis_table_id);
     table.id = vis_table_id;
     kmp_box.replaceWith(table);
+    document.getElementById('center-element').scrollIntoView({ behavior: 'instant', block: 'nearest', inline: 'center', container: 'nearest'});
+
+
 
 
     // Add the pseudocode vis:

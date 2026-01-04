@@ -4,9 +4,15 @@
 }
 
 :root {
-    --vis-padding: 5px;
-    --kmp-failure-suffix-color: #66cdaa;
-    --kmp-failure-prefix-color: #d5c9df ;
+    --vis-padding: 0.3em;
+    --td-font-size: 1.5em;
+    --kmp-failure-suffix-color: var(--correct);
+    /* #66cdaa; */
+    --kmp-failure-prefix-color: var(--correct);
+    --kmp-failure-overlap-top: 20%;
+    --kmp-failure-overlap-bottom: calc(100% - var(--kmp-failure-overlap-top));
+
+     /* #d5c9df ; */
     --correct: #00ff00;
     --incorrect: #ff0000;
     --btn-color: #4f46e5;
@@ -17,15 +23,16 @@
 
 
 body {
-    margin: 0;
-    padding: 10px;
+    margin: 0 auto 2em auto;
     background: #f5f7fb;
     color: #333;
     line-height: 1;
     display: grid;
     justify-content: center; /* Horizontal centering */
     align-items: center;     /* Vertical centering */
-    scale: 2,
+    transform-origin: top;
+    transform: scale(1.5);
+    width:60vw;
 }
 
 .btn-container {
@@ -36,14 +43,24 @@ body {
     margin: 0 auto 25px auto;
 }
 
+
+
 .vis-container {
     background: white;
     padding: 0px;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
     margin: 0 auto 25px auto;
-    overflow-x:scroll;
-    overflow-y:visible;
+    overflow-x:hidden;
+    overflow-y:hidden;
+    max-width: 50vw;
+    max-height: 100vh;
     /* max-width: 1000px; */
+}
+
+.scrollable-div {
+    overflow-x: scroll;
+    height:auto;
+    display: block;
 }
 
 .btn-container input[type="text"] {
@@ -112,20 +129,20 @@ td {
   padding: var(--vis-padding);
   font-family: monospace;
   text-shadow: #ffffff;
-  font-size: 1.5em;
+  font-size: var(--td-font-size);
 }
 
 .pseudocode-td {
     text-align: left;
-    font-size: 1em;
     padding: 0;
+    font-size:1em;
     background:#ccc;
 }
 
 .pseudocode-highlighted-td {
     text-align: left;
     padding: 0;
-    font-size: 1em;
+    font-size:1em;
     background: var(--pseudocode-highlighted);
 }
 
@@ -136,11 +153,11 @@ td {
     padding-bottom: calc(var(--vis-padding)/4);
 }
 
-
 .info-text {
     text-align: left;
     font-size:1.3em;
 }
+
 .zw-td {
     max-width: 0pt;
     padding: 0px;
@@ -155,37 +172,37 @@ td {
 }
 
 .half-color-prefix-td {
-  background-image: linear-gradient(to bottom, var(--kmp-failure-prefix-color) 50%, transparent 50%);
+  background-image: linear-gradient(to bottom, var(--kmp-failure-prefix-color) var(--kmp-failure-overlap-top), transparent var(--kmp-failure-overlap-top));
 }
 .half-color-suffix-td {
-  background-image: linear-gradient(to bottom, transparent 50%, var(--kmp-failure-suffix-color) 50%);
+  background-image: linear-gradient(to bottom, transparent var(--kmp-failure-overlap-bottom), var(--kmp-failure-suffix-color) var(--kmp-failure-overlap-bottom));
 }
 
 .half-color-overlap-td {
-  background-image: linear-gradient(to bottom, var(--kmp-failure-prefix-color) 50%, var(--kmp-failure-suffix-color) 50%);
+  background-image: linear-gradient(to bottom, var(--kmp-failure-prefix-color) 0% var(--kmp-failure-overlap-top), transparent var(--kmp-failure-overlap-top) var(--kmp-failure-overlap-bottom), var(--kmp-failure-suffix-color) var(--kmp-failure-overlap-bottom));
 }
 
 
 .half-color-overlap-correct-prefix-td {
-  background-image: linear-gradient(to bottom, var(--correct) 50%, var(--kmp-failure-suffix-color) 50%);
+  background-image: linear-gradient(to bottom, var(--correct) 0% var(--kmp-failure-overlap-top), transparent var(--kmp-failure-overlap-top) var(--kmp-failure-overlap-bottom), var(--kmp-failure-suffix-color) var(--kmp-failure-overlap-bottom));
 }
 
 .half-color-overlap-incorrect-prefix-td {
-  background-image: linear-gradient(to bottom, var(--incorrect) 50%, var(--kmp-failure-suffix-color) 50%);
+  background-image: linear-gradient(to bottom, var(--incorrect) 0% var(--kmp-failure-overlap-top), transparent var(--kmp-failure-overlap-top) var(--kmp-failure-overlap-bottom), var(--kmp-failure-suffix-color) var(--kmp-failure-overlap-bottom));
 }
 .half-color-correct-suffix-td {
-  background-image: linear-gradient(to bottom, transparent 50%, var(--correct) 50%);
+  background-image: linear-gradient(to bottom, transparent var(--kmp-failure-overlap-bottom), var(--correct) var(--kmp-failure-overlap-bottom));
 }
 
 .half-color-incorrect-suffix-td {
-  background-image: linear-gradient(to bottom, transparent 50%, var(--incorrect) 50%);
+  background-image: linear-gradient(to bottom, transparent var(--kmp-failure-overlap-bottom), var(--incorrect) var(--kmp-failure-overlap-bottom));
 }
 .half-color-correct-prefix-td {
-  background-image: linear-gradient(to bottom, var(--correct) 50%, transparent 50%);
+  background-image: linear-gradient(to bottom, var(--correct) var(--kmp-failure-overlap-top), transparent var(--kmp-failure-overlap-top));
 }
 
 .half-color-incorrect-prefix-td {
-  background-image: linear-gradient(to bottom, var(--incorrect) 50%, transparent 50%);
+  background-image: linear-gradient(to bottom, var(--incorrect) var(--kmp-failure-overlap-top), transparent var(--kmp-failure-overlap-top));
 }
 
 .incorrect-td {
@@ -199,7 +216,8 @@ td {
 
 
 table {
-    overflow-x: auto;
+    overflow-x: scroll;
+    overflow-y: scroll;
 }
 
 table.suffix-table td {

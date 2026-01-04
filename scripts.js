@@ -22,9 +22,13 @@ const select_kmp_btn = document.getElementById("select-kmp-btn");
 const select_kmp_failure_btn = document.getElementById("select-kmp-failure-btn");
 const next_step_btn = document.getElementById("next-step-btn");
 const prev_step_btn = document.getElementById("prev-step-btn");
+
 const vis_step_slider = document.getElementById("vis-step-slider");
 const vis_speed_slider = document.getElementById("vis-speed-slider");
 const vis_padding_slider = document.getElementById("vis-padding-slider");
+const vis_fontsize_slider = document.getElementById("vis-fontsize-slider");
+const style_reset_btn = document.getElementById("style-reset-btn");
+
 const play_btn = document.getElementById("play-btn");
 const pause_btn = document.getElementById("pause-btn");
 const reset_btn = document.getElementById("reset-btn");
@@ -78,6 +82,7 @@ function on_alg_select() {
     vis_step_slider.disabled = false;
     vis_speed_slider.disabled = false;
     vis_padding_slider.disabled = false;
+    vis_fontsize_slider.disabled = false;
 
     play_btn.disabled = false;
     reset_btn.disabled = false;
@@ -270,6 +275,12 @@ Visualisation Control Input Handlers
 
 */
 
+function setCookie(name, value) {
+    // ;path=/ makes the cookie available across the entire website
+    document.cookie = name + "=" + (value || "") + expires + "; path=/";
+}
+
+
 select_kmp_btn.addEventListener("click", function(e) {
     get_kmp_strings();
 });
@@ -315,6 +326,7 @@ vis_speed_slider.addEventListener("input", function(e) {
         stop_autoplay();
         start_autoplay();
     }
+    localStorage.setItem("vis-speed",this.value);
 });
 
 vis_step_slider.addEventListener("input", function(e) {
@@ -322,25 +334,75 @@ vis_step_slider.addEventListener("input", function(e) {
     refresh_vis_frame();
 });
 
-vis_padding_slider.addEventListener("input", function(e) {
-    root.style.setProperty('--vis-padding', `${this.value}px`);
+
+style_reset_btn.addEventListener("click", function(e) {
+    localStorage.setItem('--vis-padding', "0.3");
+    localStorage.setItem('--td-font-size', "1.5");
+    updateSavedStyles();
 });
 
-let sliders = [vis_speed_slider, vis_step_slider, vis_padding_slider];
+vis_padding_slider.addEventListener("input", function(e) {
+    let value = `${this.value}em`;
+    root.style.setProperty('--vis-padding', value);
+    localStorage.setItem('--vis-padding', this.value);
+});
+
+vis_fontsize_slider.addEventListener("input", function(e) {
+    let value = `${this.value}em`;
+    root.style.setProperty('--td-font-size', value);
+    localStorage.setItem('--td-font-size', this.value);
+});
+
+let sliders = [vis_speed_slider, vis_step_slider, vis_padding_slider, vis_fontsize_slider];
 for (var slider of sliders) {
     // Allow for using mouse wheel to change vis_step
     slider.addEventListener("wheel", function(e) {
         e.preventDefault();
         e.stopPropagation();
+        if (!this.disabled) {
+            // Determine scroll direction (deltaY < 0 for scroll up, > 0 for scroll down)
+            if (e.deltaY < 0) {
+                this.stepUp();
+            } else {
+                this.stepDown();
+            }
 
-        // Determine scroll direction (deltaY < 0 for scroll up, > 0 for scroll down)
-        if (e.deltaY < 0) {
-            this.stepUp();
-        } else {
-            this.stepDown();
+            var event = new Event('input', {bubbles: true});
+            this.dispatchEvent(event);
         }
-
-        var event = new Event('input', {bubbles: true});
-        this.dispatchEvent(event);
     });
+}
+
+// Allow visulisation control with arrow keys
+document.addEventListener('keydown', function(event) {
+    if (event.code === 'ArrowLeft') {
+        event.preventDefault();
+        prev_vis_step();
+    } else if (event.code === 'ArrowRight') {
+        event.preventDefault();
+        next_vis_step();
+    }
+});
+
+
+document.updateSavedStyles = updateSavedStyles;
+function updateSavedStyles() {
+    var value = localStorage.getItem('vis-speed');
+    if (value != null) {
+        vis_speed_slider.value = value;
+    }
+
+    var event = new Event('input', {bubbles: true});
+    value = localStorage.getItem('--vis-padding');
+    if (value != null) {
+        vis_padding_slider.value = value;
+        vis_padding_slider.dispatchEvent(event);
+    }
+
+    event = new Event('input', {bubbles: true});
+    value = localStorage.getItem('--td-font-size');
+    if (value != null) {
+        vis_fontsize_slider.value = value
+        vis_fontsize_slider.dispatchEvent(event);
+    }
 }

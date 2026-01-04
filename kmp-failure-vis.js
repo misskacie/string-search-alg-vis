@@ -13,6 +13,7 @@ function update_failure_func_vis(failure_func, failure_steps, vis_step, search_p
 
     let kmp_s = failure_steps[vis_step][0];
     let kmp_c = failure_steps[vis_step][1];
+    let highlight_index = failure_steps[vis_step][2];
 
     let row1 = table.insertRow();
     let row2 = table.insertRow();
@@ -51,6 +52,7 @@ function update_failure_func_vis(failure_func, failure_steps, vis_step, search_p
      for (i = 0; i < search_pattern.length + 3; i++) {
         td1 = row1.insertCell();
         td2 = row2.insertCell();
+        td1.style.minWidth = '1em'
         td2.className = "zw-td";
         let text1 = NBSP, text2 = NBSP;
         if (i < search_pattern.length) {
@@ -120,7 +122,6 @@ function update_failure_func_vis(failure_func, failure_steps, vis_step, search_p
         "\\qquad \\texttt{return F}"
     ]
 
-    let highlight_index = failure_steps[vis_step][2];
 
     for (i = 0; i < pseudocode_lines.length; i++) {
         td.className = "pseudocode-td";
