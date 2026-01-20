@@ -375,6 +375,11 @@ for (var slider of sliders) {
 
 // Allow visulisation control with arrow keys
 document.addEventListener('keydown', function(event) {
+    const activeTag = document.activeElement.tagName;
+    if (activeTag === 'INPUT' || activeTag === 'TEXTAREA' || activeTag === 'SELECT') {
+        return; // Do nothing if focused in these elements
+    }
+
     if (event.code === 'ArrowLeft') {
         event.preventDefault();
         prev_vis_step();
