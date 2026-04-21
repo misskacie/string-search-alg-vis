@@ -135,7 +135,7 @@ function update_bmh_vis(steps, found, vis_step, search_pattern, search_text) {
         "\\texttt{function bmh\\_search(pattern, text):}",
         "\\qquad \\texttt{L} \\leftarrow \\texttt{create\\_shift\\_array(pattern)}",
         "\\qquad \\texttt{(s, i)} \\leftarrow \\texttt{(0, pattern\\_length - 1)}",
-        "\\qquad \\texttt{while s < text\\_length - pattern\\_length}",
+        "\\qquad \\texttt{while s <= text\\_length - pattern\\_length}",
         "\\qquad \\qquad \\texttt{if text[s + i] != pattern[i]}",
         "\\qquad \\qquad \\qquad \\texttt{s} \\leftarrow \\texttt{L[text[s + pattern\\_length - 1]]}",
         "\\qquad \\qquad \\qquad \\texttt{i} \\leftarrow \\texttt{pattern\\_length - 1)}",
