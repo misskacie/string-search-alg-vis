@@ -146,7 +146,7 @@ function update_kmp_vis(steps, found, vis_step, search_pattern, search_text) {
         "\\texttt{function kmp\\_search(pattern, text):}",
         "\\qquad \\texttt{F} \\leftarrow \\texttt{kmp\\_failure\\_func(pattern)}",
         "\\qquad \\texttt{(s, i)} \\leftarrow \\texttt{(0, 0)}",
-        "\\qquad \\texttt{while s <= text\\_length - pattern\\_length}",
+        "\\qquad \\texttt{while s $\\leq$ text\\_length - pattern\\_length}",
         "\\qquad \\qquad \\texttt{if text[s+i] = pattern[i]}",
         "\\qquad \\qquad \\qquad \\texttt{i} \\leftarrow \\texttt{i+1}",
         "\\qquad \\qquad \\qquad \\texttt{if i = pattern\\_length}",

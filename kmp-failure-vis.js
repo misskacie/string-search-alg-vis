@@ -111,7 +111,7 @@ function update_failure_func_vis(failure_func, failure_steps, vis_step, search_p
     let pseudocode_lines = [
         "\\texttt{function kmp\\_failure\\_func(pattern):}",
         "\\qquad \\texttt{(c, s)} \\leftarrow \\texttt{(0, 2)}",
-        "\\qquad \\texttt{F[0], F[1]} \\leftarrow \\texttt{-1, 0}",
+        "\\qquad \\texttt{(F[0], F[1])} \\leftarrow \\texttt{(-1, 0)}",
         "\\qquad \\texttt{while s < pattern\\_length}",
         "\\qquad \\qquad \\texttt{if pattern[c] = pattern[s-1]}",
         "\\qquad \\qquad \\qquad \\texttt{(c, F[s], s)} \\leftarrow \\texttt{(c+1, c+1, s+1)}",
