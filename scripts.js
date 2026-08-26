@@ -35,6 +35,8 @@ const reset_btn = document.getElementById("reset-btn");
 const search_pattern_field = document.getElementById("search_pattern");
 const search_text_field = document.getElementById("search_text");
 
+const btn_container_div = document.getElementById("btn-container-div");
+const btn_container_menu = document.getElementById("btn-container-menu");
 const kmp_vis_div = document.getElementById("kmp-vis-div");
 const kmp_failure_vis_div = document.getElementById("kmp-failure-vis-div");
 const bmh_vis_div = document.getElementById("bmh-vis-div");
@@ -386,6 +388,8 @@ document.addEventListener('keydown', function(event) {
     } else if (event.code === 'ArrowRight') {
         event.preventDefault();
         next_vis_step();
+    } else if (event.code === 'KeyF') {
+        btn_container_menu.open = !btn_container_menu.open;
     }
 });
 
